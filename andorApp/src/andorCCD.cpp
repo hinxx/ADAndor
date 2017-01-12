@@ -1137,7 +1137,12 @@ asynStatus AndorCCD::setupAcquisition()
         driverName, functionName, binX, binY, minX+1, minX+sizeX, minY+1, minY+sizeY);
       checkStatus(SetImage(binX, binY, minX+1, minX+sizeX, minY+1, minY+sizeY));
     }
-
+    if (readOutMode == ARFullVerticalBinning) {
+		  asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
+			"%s:%s:, SetFVBHBin(%d)\n",
+			driverName, functionName, binX);
+		  checkStatus(SetFVBHBin(binX));
+    }
     asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, 
       "%s:%s:, SetExposureTime(%f)\n", 
       driverName, functionName, mAcquireTime);
